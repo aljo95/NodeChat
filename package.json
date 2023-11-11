@@ -1,0 +1,23 @@
+{
+  "name": "nodechat",
+  "version": "1.0.0",
+  "type":"commonjs",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aljo95/NodeChat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aljo95/NodeChat/issues"
+  },
+  "homepage": "https://github.com/aljo95/NodeChat#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
