@@ -10,9 +10,18 @@ passport.use(
             // Find the user by username in the database 
             const user = await User.findOne({ username }); 
             // If the user does not exist, return an error 
+
+            console.log(done);
+
+
+            console.log("INSIDE PASSP.JS: " + user);
+
+
             if (!user) { 
                 return done(null, false, { error: "Incorrect username" }); 
             } 
+
+            console.log("After wrong username");
   
             // Compare the provided password with the  
             // hashed password in the database 
