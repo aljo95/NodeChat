@@ -1,71 +1,23 @@
 
+
+import Home from './Components/Home';
+import  Login  from './Components/Login';
+import  Register  from './Components/Register';
 import './App.css';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React /*,{ Component }*/ from 'react';
+import { Route, Routes } from 'react-router-dom';
+//import ReactDOM from 'react-dom/client';
 
 function App() {
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleuserChange = (e) => {
-    setUsername(e.target.value);
-  }
-  const handlepwChange = (e) => {
-    setPassword(e.target.value);
-  }
-
-
-
-  const handleForm = async (e) => {
-    
-    console.log(username);
-    e.preventDefault();
-    
-    const userData = {
-      username: username,
-      password: password,
-    };
-
-    try {
-      const add = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-      console.log(add);
-    } catch(err) {
-      console.error();
-    }
-  };
-
-
-
   return (
-    <div className="App">
-      <h2 className='center'>Login</h2>
-        <form className='center' onSubmit={handleForm}>
-          <div>
-            <label>Username: </label>
-            <input type='text' name='username' value={username} onChange={handleuserChange}></input>
-          </div>
-          {
-          <div>
-            <label>Password: </label>
-            <input type='password' name='password' value={password} onChange={handlepwChange}></input>
-          </div>
-        }
-          <div>
-            <input type='submit' value='Log in'></input>
-          </div>
-        </form>
-
-
-
-      
-    </div>
+    <main>
+      <Routes>
+        <Route path='/' Component={Home} exact />
+        <Route path="/login" Component={Login} />
+        <Route path='/register' Component={Register}/>
+      </Routes>
+    </main>
   );
 }
 
