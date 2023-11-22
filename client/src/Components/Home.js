@@ -1,22 +1,28 @@
 import './App.css';
-import React, { useState } from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 //import  Login  from './Components/Login';
 //import  Register  from './Components/TestRoute';
 
 export default function Home() {
 
+
+
   return (
     <div className="home">
-      <h2 id='welcome'>Welcome</h2>
+      <h2 id='welcome'><p>NodeChat</p></h2>
 
-      <button id="login" className=''>
-        <Link to='/login'> Login </Link>
-      </button>
+      <Link to='/login'>
+        <button id="login" className='btns'>
+          <p>LOGIN</p>
+        </button>
+      </Link>
 
-      <button id="register" className=''>
-        <Link to='/register' className=''> Register </Link>
-      </button>
+      <Link to='/register'>
+        <button id="register" className='btns'>
+          <p>REGISTER</p>
+        </button>
+      </Link>
 
       
     </div>
