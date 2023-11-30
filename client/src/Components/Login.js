@@ -44,12 +44,15 @@ export default function Login() {
     }
   };
 */
-
+/*
 useEffect(() => {
-  fetch('http://localhost:8080/api/checkAuth', {
-    method: 'GET',
-    hedaers: {
-      'Content-Type': 'Application/json'
+  //fetch('http://localhost:8080/api/checkAuth', {
+  fetch('http://127.0.0.1:8080/api/checkAuth', {
+    method: 'POST',
+    //credentials: "include",
+    headers: {
+      'Content-Type': 'Application/json',
+
     },
     
   })
@@ -62,6 +65,50 @@ useEffect(() => {
 
 
 }, []);
+*/
+useEffect(() => {
+  fetch('http://127.0.0.1:8080/api/checkAuth', {
+    //method: 'GET',
+    credentials: "include",
+    //headers: {
+    //  'Content-Type': 'application/json'
+    //},
+  })
+  /*
+  .then((response) => response.json()).then((data) => {
+    console.log("HEHEHEIAHRIEAHRIARHOEIAHRA");
+    console.log(data);
+  });
+  */
+  .then((response) => {
+    return response.json().then((jsonResponse) => {
+      console.log(jsonResponse);
+      console.log(jsonResponse.user.name);
+    })
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const handleForm = async (e) => {
     
@@ -73,8 +120,10 @@ const handleForm = async (e) => {
       password: password,
     };
 
-    fetch('http://localhost:8080/api/login', {
+    //fetch('http://localhost:8080/api/login', {
+    fetch('http://127.0.0.1:8080/api/login', {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json'
         },
@@ -117,5 +166,4 @@ const handleForm = async (e) => {
   </div>
   );
 }
-/*
-export default Login;*/
+//  export default Login;
