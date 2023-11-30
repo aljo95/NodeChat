@@ -70,17 +70,49 @@ router.post('/register', async (req, res) => {
 // User login route 
 router.post(                            // NEED TO FIND USER FROM DATABASE NOT JUST EXPECT IT TO EXIST LOL
     '/login', 
-    passport.authenticate("local", { session: false, failureFlash: true }), 
-    (req, res) => { 
+    passport.authenticate("local", { session: true }), //????????????????
+    async (req, res) => { 
         
         req.session.name = req.body.username; 
+        /*
+        console.log("XXXXXXXXXXXXXXXXXXXXXXX");
+        console.log(req.session);
+        console.log(req.session.name);
+        console.log("XXXXXXXXXXXXXXXXXXXXXXX");
         req.session.save(); 
         console.log("Logging in user: <" + req.body.username + "> ...");
         return res.status(200).json({ message: "success" });
+        */
+
+       // await req.session.save();
+        console.log(req.session);
+        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+        console.log(req.sessionID);
         
-        
-    } 
+        console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+        //return 
+        res.status(200).json({ message: "success" });
+        console.log("THIS SHOULD NOT EXIST HERE!");
+    }
 ); 
+
+
+router.get('/checkAuth', (req, res) => {
+
+    if (req.isAuthenticated()) {
+        console.log("LOGGED IN!");
+    } else {
+        console.log("NOT LOGGED IN :<");
+    }
+
+    /*
+    console.log(req.session);   
+    console.log("AND THE SID(?) IS: ")
+    console.log(req.sessionID);
+    res.json({ user: req.session });
+    */
+})
+
   
 router.get("/logout", (req, res) => { 
     req.session.destroy(); 
