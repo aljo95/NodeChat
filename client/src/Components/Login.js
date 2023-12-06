@@ -1,14 +1,16 @@
 import './App.css';
 //import axios from 'axios';
-import React, { useState, redirect, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { UserContext } from '../App.js';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, redirect } from "react-router-dom";
 
 export default function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [passPortLogin, setPassPortLogin] = useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  
 
   const handleuserChange = (e) => {
     setUsername(e.target.value);
@@ -67,12 +69,15 @@ useEffect(() => {
 }, []);
 */
 useEffect(() => {
+
+
+
   fetch('http://127.0.0.1:8080/api/checkAuth', {
-    //method: 'GET',
+    method: 'GET',
     credentials: "include",
-    //headers: {
-    //  'Content-Type': 'application/json'
-    //},
+    headers: {
+      'Content-Type': 'application/json'
+    },
   })
   /*
   .then((response) => response.json()).then((data) => {
@@ -82,11 +87,18 @@ useEffect(() => {
   */
   .then((response) => {
     return response.json().then((jsonResponse) => {
+      console.log("IN FRONTEND :)")
       console.log(jsonResponse);
-      console.log(jsonResponse.user.name);
+      console.log(jsonResponse.username);
+      console.log("End of fetch :)")
+      if (jsonResponse.username) {
+        setIsLoggedIn(true);
+        navigate("/Profile");
+      }
     })
   })
-})
+}, [])
+
 
 
 
@@ -133,7 +145,10 @@ const handleForm = async (e) => {
         console.log(res);
         if (res.ok) {
           alert("GOOD JOB XD");
-          setLoggedIn(true);
+          setIsLoggedIn(true);
+
+          navigate("/Profile");
+
         } else {
           alert("WRONG INFO!");
         }
