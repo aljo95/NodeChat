@@ -1,6 +1,9 @@
 import './App.css';
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from "react-router-dom";
+import socketIO from 'socket.io-client';
+
+  //const socket = socketIO.connect('http://127.0.0.1:8080');
 
 export default function Chat() {
 
@@ -19,6 +22,8 @@ export default function Chat() {
             if (!jsonResponse.username) {
                 //redirect back to home (root)
                 navigate("/");
+            } else {
+              const socket = socketIO.connect('http://127.0.0.1:8080');
             }
 
           })
@@ -27,8 +32,13 @@ export default function Chat() {
 
     const logout = (e) => {
         //DESTROY SESSION AND SET STATE TO FALSE
+        
         //THEN REDIRECT TO HOME (AKA ROOT "/")
     }
+
+
+
+
 
 
   return (
