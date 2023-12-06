@@ -22,30 +22,38 @@ const routes = require('./pages.js');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+
+const cors = require('cors');
+
+
 const FileStore = require('session-file-store')(session);
 
-//const cors = require('cors');
 
+/*****************************************************************************************/
 const app = express();
 connectDB();
+const http = require('http').Server(app);
 
 
-/*
+
+/*****************************************************************************************/
+
+
 const corsOptions = {
-    //origin: "http://127.0.0.1:3000", // allow to server to accept request from different origin
+    origin: "http://127.0.0.1:3000", // allow to server to accept request from different origin
     origin: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionSuccessStatus: 200,
     credentials: true,
 }
-app.options('*', cors(corsOptions)) // for pre-flight
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)) // for pre-flight
 
 
-*/
-app.set('trust proxy', 1);
 
+    // app.set('trust proxy', 1);
 
+/*
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3000"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -53,9 +61,21 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, HEAD, DELETE"); // you must specify the methods used with credentials. "*" will not work. 
     next();
 });
+*/
+/*****************************************************************************************/
+const socketIO = require('socket.io')(http, {
+    cors: {
+        origin: 'http://127.0.0.1:3000',
+    }
+});
 
-
-
+socketIO.on('connection', (socket) => {
+    console.log(`⚡: ${socket.id} user just connected!`);
+    socket.on('disconnect', () => {
+      console.log('🔥: A user disconnected');
+    });
+});
+/*****************************************************************************************/
 
 
 const options = {};
@@ -70,7 +90,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
         secure: false, 
-        sameSite: 'none',
+        sameSite: 'lax',
         httpOnly: false,
         maxAge: (4 * 60 * 60 * 1000) 
     }
@@ -96,13 +116,6 @@ passport.deserializeUser( async (id, done) => {
     }
 
 });
-/*
-passport.deserializeUser( async (id, done) => {
-
-    await User.findById(id, (err, user) => done(err, user));
-    
-});
-*/
 
 app.set('view engine', 'ejs')
 
@@ -123,10 +136,6 @@ app.route('/').get((req, res) => {
     res.send("TESTROUTE");
 })
 /*
-app.post('/register', (req, res) => {
-    console.log("POSTEDEDED");
-})
-*/
 
 
 
@@ -150,87 +159,6 @@ app.post('/register', (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-mongoDB(async client => {
-    const mDB = await client.db('newUsers').collection('users');
-
-    
-    /*
-    app.route('/login').post((req, res) => {
-        const response = {  
-            first_name:req.body.username,  
-            last_name:req.body.password  
-        };  
-        mDB.insertOne(response);
-        console.log("DOES WURK!?!?");  
-        res.sendStatus(200);
-        res.end(JSON.stringify(response));  
-    })
-    
-/*
-    app.post('/login', passport.authenticate('local', {failureRedirect: '/' }), (req,res) => {
-        console.log("INSIDE POST");
-        const response = {  
-            first_name:req.body.username,  
-            last_name:req.body.password  
-        };  
-        res.sendStatus(200);
-        res.end(JSON.stringify(response));  
-    })
-    */
-
-/*
-
-    passport.use(new LocalStrategy((username, password, done) => {
-        console.log("aaaaaaaaaaaaaaaaaa");
-        console.log(username);
-
-        mDB.findOne({ name: username }
-            
-            , (err, user) => {
-            console.log("INSIDE DB");
-            console.log(`User ${username} attempted to log in.`);
-            if (err) return done(err);
-            if (!user) return done(null, false);
-            if (password !== user.password) return done(null, false);
-            return done(null, user);
-        }
-        
-        );
-    }));
-
-    passport.serializeUser((user, done) => {
-        done(null, user._id);
-    });
-    passport.deserializeUser((id, done) => {
-        mDB.findOne({ _id: new ObjectID(id) }, (err, doc) => {
-            done(null, null);
-        });
-    });
-
-}).catch(e => {
-    console.log(e);
-})*/
 
 
 
@@ -243,7 +171,10 @@ function ensureAuthenticated(req, res, next) {
   };
 
 
-
+/*
 app.listen(8080, () => {
     console.log('server listening on port 8080')
-})
+})*/
+http.listen(8080, () => {
+    console.log(`Server listening on 8080`);
+});
