@@ -71,6 +71,15 @@ const socketIO = require('socket.io')(http, {
 
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
+    console.log('ALSO WE GOT THE USER ID?');
+    socket.on('store-user', (userId) => {
+        console.log(userId);
+    })
+    console.log("AFTER USERID");
+    socket.on('sendMessage', (message) => {
+        socketIO.emit('message', message);
+    })
+
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
     });
