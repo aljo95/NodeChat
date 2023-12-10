@@ -69,13 +69,18 @@ const socketIO = require('socket.io')(http, {
     }
 });
 
+let userNames = {};
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
-    console.log('ALSO WE GOT THE USER ID?');
-    socket.on('store-user', (userId) => {
-        console.log(userId);
+    
+    socket.on('setSockedId', (data) => {
+        let userName = data.name;
+        let userId = data.Id;
+        userNames[userName] = userId;
+        socketIO.emit('data', data);
     })
-    console.log("AFTER USERID");
+    
+
     socket.on('sendMessage', (message) => {
         socketIO.emit('message', message);
     })
