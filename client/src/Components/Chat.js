@@ -5,6 +5,7 @@ import socketIO from 'socket.io-client';
 
   //const socket = socketIO.connect('http://127.0.0.1:8080');
   const socket = socketIO.connect('http://127.0.0.1:8080');
+  let data = {};
 
 export default function Chat() {
 
@@ -14,10 +15,13 @@ export default function Chat() {
     const [messages, setMessages] = useState([]);
     const [messageText, setMessageText] = useState('');
 
+    let nickname = "";
+    //let data = {hehe: "hoho"};
+
     useEffect(() => {
 
       /////////////////////////////////
-      socket.on('store-user');
+      
 //////////////////////////////
 
         fetch('http://127.0.0.1:8080/api/checkAuth', {
@@ -25,14 +29,15 @@ export default function Chat() {
         })
         .then((response) => {
           return response.json().then((jsonResponse) => {
-            console.log(jsonResponse);
-            setUsername(jsonResponse.username)
 
             if (!jsonResponse.username) {
                 //redirect back to home (root)
                 navigate("/");
             } else {
+              nickname = jsonResponse.username;
               
+              data = {name: nickname, userId: socket.id};
+              console.log(data);
 
               socket.on('connect', () => {
                 console.log('Connected to server');
@@ -58,13 +63,13 @@ export default function Chat() {
 
 
     const sendMessage = () => {
+      socket.emit('setSockedId', data);
+      console.log("-----------");
+      console.log(data);
+      console.log("-----------");
       socket.emit('sendMessage', { text: messageText });
       setMessageText('');
     }
-
-
-
-
 
     const logout = (e) => {
         //DESTROY SESSION AND SET STATE TO FALSE
@@ -86,8 +91,8 @@ export default function Chat() {
         <div className="messages">
           {messages.map((message, index) => (
             <div className="nameAndMessage-container" key={index}>
-              <p className="message-username">{username}</p>
-              <p className="message-text">{message.text}</p>
+              <p className="message-username">{data.userId}</p>
+             {/*  <p className="message-text">{message.text}</p> */}
             </div>
           ))}
         </div>
