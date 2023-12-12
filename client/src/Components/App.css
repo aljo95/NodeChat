@@ -177,9 +177,106 @@ label {
 
 
 
+
+
+
+/* CHAT ROOM */
+
+.chat-room {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.nav-bar {
+  border: solid;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+.main-content {
+  border: solid;
+  width: 50%;
+  height: 60%;
+  display: flex;
+  flex-direction: row;
+  
+}
+
+/*  Inside Main-content container */
+.users-list {
+  border: solid; 
+  border-width: 1px;
+  width: 20%;
+}
+#users-online {
+  
+}
+
+
+.messages {
+  width: 60%;
+}
+.nameAndMessage-container {
+  border: solid;
+}
+
+.last-space {
+  border: dashed;
+}
+
+/* End of main-content */
+
+.input-container {
+  border: dashed;
+}
+
+/* End of chat room */
+
+
+
+
+
+
+
+#root {
+  width: 100%;
+  height: 100%;
+  border: dashed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+*/
+
+
+
+
+
+
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px gray inset !important;
 }
+
+
+
+
+
+
+
+
