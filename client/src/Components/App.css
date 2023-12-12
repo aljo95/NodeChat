@@ -226,6 +226,7 @@ label {
 
 .messages {
   width: 60%;
+  overflow-y: scroll;
 }
 .nameAndMessage-container {
   border: solid;
@@ -273,7 +274,9 @@ input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px gray inset !important;
 }
 
-
+::-webkit-scrollbar {
+  
+}
 
 
 
