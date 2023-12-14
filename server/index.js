@@ -62,27 +62,64 @@ app.use(function (req, res, next) {
     next();
 });
 */
+
+
+
+
+app.use(cookieParser());
+
+const sessionMiddleware = session({
+    //store: new FileStore(options),
+    secret: 'sEshEcrEt',   //secret
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: false, 
+        sameSite: 'lax',
+        httpOnly: false,
+        maxAge: (4 * 60 * 60 * 1000) 
+    }
+})
+
+app.use(sessionMiddleware);
+
+
+
+
+
+
+
 /*****************************************************************************************/
 const socketIO = require('socket.io')(http, {
     cors: {
+        transports: ['websocket'],
         origin: 'http://127.0.0.1:3000',
-    }
+        credentials: true,
+    }   
 });
+
+socketIO.engine.use(sessionMiddleware);
 
 let userNames = {};
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
     
-    socket.on('setSockedId', (data) => {
-        let userName = data.name;
-        let userId = data.Id;
-        userNames[userName] = userId;
-        socketIO.emit('data', data);
-    })
     
 
-    socket.on('sendMessage', (message) => {
+    
+
+    socket.on('sendMessage', async (message) => {
         socketIO.emit('message', message);
+        const sockets = await socketIO.fetchSockets();
+        console.log("CONNECTED USERS: " + sockets.length);
+
+        console.log("Session object in socket: ");
+        //console.log(socket.request.session);
+        console.log("Session object in socket end");
+    })
+
+    socket.on("displayUsername", (username) => {
+        socketIO.emit('username', username);
     })
 
     socket.on('disconnect', () => {
@@ -96,19 +133,6 @@ const options = {};
 
 
 
-app.use(cookieParser());
-app.use(session({
-    //store: new FileStore(options),
-    secret: 'sEshEcrEt',   //secret
-    resave: false,
-    saveUninitialized: true,
-    cookie: { 
-        secure: false, 
-        sameSite: 'lax',
-        httpOnly: false,
-        maxAge: (4 * 60 * 60 * 1000) 
-    }
-}));
 
 //app.use(cookieParser());
 app.use(bodyParser.json());
