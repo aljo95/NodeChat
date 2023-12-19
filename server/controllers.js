@@ -99,23 +99,27 @@ router.post(                            // NEED TO FIND USER FROM DATABASE NOT J
 
 router.get('/checkAuth', (req, res) => {
 
+    
     if (req.isAuthenticated()) {
         console.log("LOGGED IN!");
     } else {
         console.log("NOT LOGGED IN :<");
     }
-
+    console.log("-----------------------");
+    console.log(req.session);
+    console.log("-----------------------");
     /*
-    console.log(req.session);   
-    console.log("AND THE SID(?) IS: ")
-    console.log(req.sessionID);
-    res.json({ user: req.session });
+    console.log("----------------------");
+    console.log("in checkAuth: ");
+    console.log(req.session);
     */
+   res.send({ username: req.session.name } )
 })
 
   
 router.get("/logout", (req, res) => { 
     req.session.destroy(); 
-    res.redirect("/"); 
+    res.status(200).json({ message: "logout success" });        // Add conditional response?
 }); 
+
 module.exports = router;  
