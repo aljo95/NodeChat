@@ -27,13 +27,25 @@ export default function Profile() {
 
     const logout = (e) => {
         fetch('http://127.0.0.1:8080/api/logout', {
-            credentials: "include",
+          credentials: "include",
         })
-        .then((response => {
+        .then((res) => {
+          return res.json().then((jsonRes) => {
+            console.log(jsonRes);
+            navigate("/");
+          })
+        })
+
+
+
+
+        /*
+        .then((response => {                    // LOGS OUT IN SERVER BUT FAILS TO RESPOND HERE AND REDIRECT. FIX!
             console.log("Logout response: ");
             console.log(response);
             navigate("/");
         }))
+        */
     }
 
 
