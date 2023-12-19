@@ -40,7 +40,7 @@ const http = require('http').Server(app);
 
 
 const corsOptions = {
-    origin: "http://127.0.0.1:3000", // allow to server to accept request from different origin
+    origin: "http://127.0.0.1:3000", // allow the server to accept request from different origin
     origin: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionSuccessStatus: 200,
@@ -100,7 +100,7 @@ const socketIO = require('socket.io')(http, {
 
 socketIO.engine.use(sessionMiddleware);
 
-let userNames = {};
+let userNames = [];
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
     
@@ -112,14 +112,26 @@ socketIO.on('connection', (socket) => {
         socketIO.emit('message', message);
         const sockets = await socketIO.fetchSockets();
         console.log("CONNECTED USERS: " + sockets.length);
-
-        console.log("Session object in socket: ");
-        //console.log(socket.request.session);
-        console.log("Session object in socket end");
     })
 
-    socket.on("displayUsername", (username) => {
-        socketIO.emit('username', username);
+    socket.on("sendUsername", (username) => {
+
+        if (!userNames.includes(username)) {
+            userNames.push(username);
+        }
+        console.log("IN SERVER userNames ARRAY!");
+        console.log(userNames);
+        console.log("IN SERVER userNames ARRAY!");
+        socketIO.emit('username', userNames);
+    })
+
+    socket.on("removeUser", (username) => {
+        // Find index of username and remove it from array if it exists
+        let index = userNames.indexOf(username);
+        if (index !== -1) {
+            userNames.splice(index, 1);
+        }
+        socket.emit("updatedUsers", userNames);
     })
 
     socket.on('disconnect', () => {
