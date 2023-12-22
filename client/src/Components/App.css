@@ -230,10 +230,17 @@ label {
   scrollbar-width: thin;
 }
 .nameAndMessage-container {
-  border: solid;
   display:flex;
-  flex-direction: row;
   overflow-wrap: break-word;
+  border: dashed;
+  
+  flex-direction: row;
+}
+.message-text {
+  position: relative;
+  left: 00px;
+  top: 30px;
+
 }
 
 .last-space {
@@ -247,6 +254,13 @@ label {
 }
 
 /* End of chat room */
+
+.name-and-time {
+  display: flex;
+  flex-direction: row;
+}
+
+
 
 
 
@@ -263,10 +277,34 @@ label {
   align-items: center;
 }
 
-*/
 
+#users-online {
+  display: flex;
+  justify-content: center;
+}
 
+.each-user-container {
+  display: flex;
+  align-items: center;
+  border: dashed;
+  height: 5%;
+}
 
+.username-list {
+  font-size: 18px;
+  margin-left: 5%;
+}
+
+.green-orb {
+  border: solid;
+  border-color: green;
+  margin-top: 3%;
+  margin-left: 5%;
+  height: 3px;
+  width: 3px;
+  background-color: green;
+  border-radius: 50%;
+}
 
 
 
