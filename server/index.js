@@ -100,6 +100,9 @@ const socketIO = require('socket.io')(http, {
 
 socketIO.engine.use(sessionMiddleware);
 
+const date = new Date();
+const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
 let userNames = [];
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
@@ -109,6 +112,12 @@ socketIO.on('connection', (socket) => {
     
 
     socket.on('sendMessage', async (message) => {
+
+        let currentDay = weekday[date.getDay()];
+        let currentTime = (date.toLocaleString()).slice(11, 16);
+        let fullTimeDisplay = currentDay + " " + currentTime;
+        message.time = fullTimeDisplay;
+        
         socketIO.emit('message', message);
         const sockets = await socketIO.fetchSockets();
         console.log("CONNECTED USERS: " + sockets.length);
