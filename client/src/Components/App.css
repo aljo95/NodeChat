@@ -210,13 +210,15 @@ label {
   height: 60%;
   display: flex;
   flex-direction: row;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgb(80, 79, 79);
+  border-width: 4px;
   
 }
 
 /*  Inside Main-content container */
 .users-list {
-  outline: auto;
-  outline-color: black;
+  border-right: solid;
   border-width: 1px;
   width: 20%;
 }
@@ -231,23 +233,25 @@ label {
   scrollbar-width: thin;
 }
 .nameAndMessage-container {
-  display:flex;
   overflow-wrap: break-word;
-  border: dashed;
-  
-  flex-direction: row;
+  padding: 0 0.5vw 0 0.5vw;
 }
+
+.name-and-time {
+  display: flex;
+}
+
+
 .message-text {
   position: relative;
-  left: 00px;
-  top: 30px;
-
+  margin-top: -10px;
 }
 
+/*
 .last-space {
   border: dashed;
 }
-
+*/
 /* End of main-content */
 
 .input-container {
@@ -256,10 +260,6 @@ label {
 
 /* End of chat room */
 
-.name-and-time {
-  display: flex;
-  flex-direction: row;
-}
 
 
 
