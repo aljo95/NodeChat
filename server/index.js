@@ -100,19 +100,26 @@ const socketIO = require('socket.io')(http, {
 
 socketIO.engine.use(sessionMiddleware);
 
-const date = new Date();
+
 const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 let userNames = [];
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
     
-    
+    socket.on('getTime', () => {
+        const date = new Date();
+        let currentDay = weekday[date.getDay()];
+        let currentTime = (date.toLocaleString()).slice(11, 16);
+        let fullTimeDisplay = currentDay + " " + currentTime;
+        socketIO.emit('getTime', fullTimeDisplay);
+    })
 
     
 
     socket.on('sendMessage', async (message) => {
 
+        const date = new Date();
         let currentDay = weekday[date.getDay()];
         let currentTime = (date.toLocaleString()).slice(11, 16);
         let fullTimeDisplay = currentDay + " " + currentTime;
@@ -123,6 +130,8 @@ socketIO.on('connection', (socket) => {
         console.log("CONNECTED USERS: " + sockets.length);
     })
 
+
+    // WHEN LOG OUT WE NEED TO REMOVE FROM userNames array with socket emit from front end!!
     socket.on("sendUsername", (username) => {
 
         if (!userNames.includes(username)) {
@@ -144,7 +153,7 @@ socketIO.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-      console.log('🔥: A user disconnected');
+      console.log('A user disconnected');
     });
 });
 /*****************************************************************************************/
