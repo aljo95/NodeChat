@@ -71,12 +71,20 @@ export default function Chat() {
 
         for (let i=messages.length-1; i>=0; i--) {
           if (messages[i].name) {
-            console.log(messages[i]);
             if (messages[i].name !== message.name) {
               setMessages([ ...messages, message]);
               return;
             } else if (messages[i].name === message.name) {
+              // UPPDATERA messages[i].time(?) här till ny tid!
+              
+              socket.emit('getTime');
+              socket.on('getTime', (time) => {
+                console.log("TIME INSIDE SOCKET.ON: " + time);
+                messages[i].time = time;
+              })
+              console.log(messages[i].time + " - 1st");
               setMessages([ ...messages, message.text]);
+              console.log(messages[i].time + " - 2nd");
               return;
             }
           }
@@ -101,10 +109,6 @@ export default function Chat() {
 
 
     const sendMessage = () => {
-      let currentDay = weekday[date.getDay()];
-      let currentTime = (date.toLocaleString()).slice(11, 16);
-      let fullTimeDisplay = currentDay + " " + currentTime;
-      //socket.emit('sendMessage', { name: username, time: fullTimeDisplay, text: messageText });
       socket.emit('sendMessage', { name: username, text: messageText });
       setMessageText('');
     }
@@ -165,7 +169,7 @@ export default function Chat() {
                 <p className="message-username"><b>{message.name}</b>&nbsp;</p>
                 <p className="message-time">{message.time}</p>
               </div>
-               <p className="message-text">{message.text}</p>
+              <p className="message-text">{message.text}</p>
             </>  
             :
             <p className="message-text">{message}</p>
