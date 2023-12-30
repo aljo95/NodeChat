@@ -15,8 +15,8 @@ export default function Chat() {
     const [messageText, setMessageText] = useState('');
 
     const [sameUserAsLastMessage, setSameUserAsLastMessage] = useState(false);
+    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
     const navigate = useNavigate();
     const ref = useRef();
     const date = new Date();
@@ -61,43 +61,57 @@ export default function Chat() {
       ref.current.scrollIntoView();
     })
 
+
     useEffect(() => {
+      
       socket.on('message', (message) => {
         //message has { message.name, message.time, message.text } as object
 
+        console.log("öööööööööööööö");
+
         if (messages.length === 0) {
+          console.log("FIRST ONLY?");
           setMessages([message]);
+          return;
         }
 
         for (let i=messages.length-1; i>=0; i--) {
+          console.log(i);
           if (messages[i].name) {
             if (messages[i].name !== message.name) {
               setMessages([ ...messages, message]);
               return;
             } else if (messages[i].name === message.name) {
-              // UPPDATERA messages[i].time(?) här till ny tid!
               
+              //DONT EVEN NEED THESE SOCKETS, JUST TAKE message.time AND USE ON THE messages[i].time !!
+              /*
               socket.emit('getTime');
               socket.on('getTime', (time) => {
-                console.log("TIME INSIDE SOCKET.ON: " + time);
                 messages[i].time = time;
+                //forceUpdate();
+                //setMessages([ ...messages]);
               })
-              console.log(messages[i].time + " - 1st");
+              */
+
+              messages[i].time = message.time;
               setMessages([ ...messages, message.text]);
-              console.log(messages[i].time + " - 2nd");
               return;
             }
           }
         }
       })
+      return () => {
+        socket.off('message');
+      }
     }, [messages])
+
 
     useEffect(() => {
       
       socket.on('username', (userNames) => {
         
         setUsernames(userNames);
-        forceUpdate();          //needed?
+       // forceUpdate();          //needed?
       })
 
     }, [usernames])
@@ -160,30 +174,43 @@ export default function Chat() {
           ))}
         </div>
 
-        <div className="messages">
-          {messages.map((message, index) => ( //need conditionals here: if (message.text) else... etc.
-          <div className="nameAndMessage-container" key={index}>
-          {message.text ? 
-            <>
-              <div className="name-and-time">
-                <p className="message-username"><b>{message.name}</b>&nbsp;</p>
-                <p className="message-time">{message.time}</p>
-              </div>
-              <p className="message-text">{message.text}</p>
-            </>  
-            :
-            <p className="message-text">{message}</p>
-          }  
-          </div>
-          ))};
-          <div ref={ref}></div>
-        </div>
-      </div>
 
+        <div className="messages-and-input">
+
+          <div className="messages">
+            {messages.map((message, index) => ( //need conditionals here: if (message.text) else... etc.
+            <div className="nameAndMessage-container" key={index}> 
+            {message.text ? 
+              <>
+                <div className="name-and-time">
+                  <p className="message-username"><b>{message.name}</b>&nbsp;</p>
+                  <p className="message-time">{message.time}</p>
+                </div>
+                <p className="message-text">{message.text}</p>
+              </>  
+              :
+              <p className="message-text">{message}</p>
+            }  
+            </div>
+            ))}
+            <div ref={ref}></div>
+          </div>
+
+
+          <div className="input-container">
+            <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></input>
+            <button onClick={sendMessage}>SEND MSG</button>
+          </div>  
+
+        </div>
+
+      </div>
+          {/* 
       <div className="input-container">
         <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></input>
         <button onClick={sendMessage}>SEND MSG</button>
       </div>  
+          */}
     </div>
   );
 }
