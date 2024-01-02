@@ -198,11 +198,13 @@ export default function Chat() {
 
 
           <div className="input-container">
-            <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></input>
-            <button onClick={sendMessage}>SEND MSG</button>
+            <textarea id ="input-text" type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></textarea>
+            <button id="input-btn" onClick={sendMessage}>SEND</button>
           </div>  
 
         </div>
+
+        <div className="future-content"></div>
 
       </div>
           {/* 
