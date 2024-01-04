@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import  socketIO  from 'socket.io-client';
 
 
-var socket = socketIO.connect('http://127.0.0.1:8080');
+var socket = socketIO.connect('http://192.168.0.4:8080');
 
 export default function Chat() {
 
@@ -24,7 +24,7 @@ export default function Chat() {
 
     useEffect(() => {
 
-        fetch('http://127.0.0.1:8080/api/checkAuth', {
+        fetch('/api/checkAuth', {
           credentials: "include",
         })
         .then((response) => {
@@ -129,7 +129,7 @@ export default function Chat() {
 
     const logout = () => {
 
-      fetch('http://127.0.0.1:8080/api/logout', {
+      fetch('/api/logout', {
         credentials: "include",
       })
       .then((res) => {
@@ -199,12 +199,19 @@ export default function Chat() {
 
           <div className="input-container">
             <textarea id ="input-text" type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></textarea>
-            <button id="input-btn" onClick={sendMessage}>SEND</button>
+            <button id="input-btn" onClick={sendMessage}>send</button>
           </div>  
 
         </div>
 
-        <div className="future-content"></div>
+        <div className="future-content">
+          <p>Future Features..?</p>
+          <ul className="future-list">
+            <li><p>Rooms with passwords</p></li>
+            <li><p>Choose name color</p></li>
+            <li><p>Profile Pictures</p></li>
+          </ul>
+        </div>
 
       </div>
           {/* 
