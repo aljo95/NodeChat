@@ -72,7 +72,8 @@ useEffect(() => {
 
 
 
-  fetch('http://127.0.0.1:8080/api/checkAuth', {
+  //fetch('http://127.0.0.1:8080/api/checkAuth', {
+  fetch('/api/checkAuth', {
     method: 'GET',
     credentials: "include",
     headers: {
@@ -132,8 +133,8 @@ const handleForm = async (e) => {
       password: password,
     };
 
-    //fetch('http://localhost:8080/api/login', {
-    fetch('http://127.0.0.1:8080/api/login', {
+    //fetch('http://127.0.0.1:8080/api/login', {
+    fetch('/api/login', {
         method: 'POST',
         credentials: "include",
         headers: {
