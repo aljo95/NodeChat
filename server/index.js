@@ -40,7 +40,8 @@ const http = require('http').Server(app);
 
 
 const corsOptions = {
-    origin: "http://127.0.0.1:3000", // allow the server to accept request from different origin
+    //origin: "http://127.0.0.1:3000", // allow the server to accept request from different origin
+    origin: "http://192.168.0.4:3000",
     origin: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionSuccessStatus: 200,
@@ -93,7 +94,7 @@ app.use(sessionMiddleware);
 const socketIO = require('socket.io')(http, {
     cors: {
         transports: ['websocket'],
-        origin: 'http://127.0.0.1:3000',
+        origin: 'http://192.168.0.4:3000',
         credentials: true,
     }   
 });
@@ -131,7 +132,7 @@ socketIO.on('connection', (socket) => {
     })
 
 
-    // WHEN LOG OUT WE NEED TO REMOVE FROM userNames array with socket emit from front end!!
+    // WHEN LOG OUT WE NEED TO REMOVE FROM userNames array with socket emit from front end!
     socket.on("sendUsername", (username) => {
 
         if (!userNames.includes(username)) {
