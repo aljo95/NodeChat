@@ -1,14 +1,12 @@
 import './App.css';
-//import axios from 'axios';
 import { UserContext } from '../App.js';
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   
 
@@ -21,57 +19,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-/*
-  const handleForm = async (e) => {
-    
-    console.log(username);
-    e.preventDefault();
-    
-    const userData = {
-      username: username,
-      password: password,
-    };
-
-    try {
-      const add = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-      console.log(add);
-    } catch(err) {
-      console.error();
-    }
-  };
-*/
-/*
 useEffect(() => {
-  //fetch('http://localhost:8080/api/checkAuth', {
-  fetch('http://127.0.0.1:8080/api/checkAuth', {
-    method: 'POST',
-    //credentials: "include",
-    headers: {
-      'Content-Type': 'Application/json',
-
-    },
-    
-  })
-  .then(res => {
-    console.log("IN FETCH GET: ");
-    console.log(res) 
-    console.log("AFTER FETCH GET: ");
-  });
-
-
-
-}, []);
-*/
-useEffect(() => {
-
-
-
   //fetch('http://127.0.0.1:8080/api/checkAuth', {
   fetch('/api/checkAuth', {
     method: 'GET',
@@ -80,12 +28,6 @@ useEffect(() => {
       'Content-Type': 'application/json'
     },
   })
-  /*
-  .then((response) => response.json()).then((data) => {
-    console.log("HEHEHEIAHRIEAHRIARHOEIAHRA");
-    console.log(data);
-  });
-  */
   .then((response) => {
     return response.json().then((jsonResponse) => {
       console.log("IN FRONTEND :)")
@@ -99,29 +41,6 @@ useEffect(() => {
     })
   })
 }, [])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const handleForm = async (e) => {
     
@@ -165,7 +84,7 @@ const handleForm = async (e) => {
   return (
     <div>
       <div className="register">
-        <h2 id='register-welcome'><p>Login</p></h2>
+        <h2 id='register-welcome'><p>Sign in</p></h2>
           <form className='register-form' onSubmit={handleForm}>
             
               <label>Username: </label>
@@ -174,12 +93,13 @@ const handleForm = async (e) => {
               <label>Password: </label>
               <input className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
             
-              <input id='reg-btn' className='btns' type='submit' value='Log in'></input>
-
+              <div className="form-btns-container">
+                <input id='reg-btn' className='btns' type='submit' value='Log in'></input>
+                <button id="back-btn" className="btns" onClick={handleClick} type="button">Back</button>
+              </div>
           </form>
-          <button onClick={handleClick} type="button" />
+          
       </div>
   </div>
   );
 }
-//  export default Login;
