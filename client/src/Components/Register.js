@@ -1,11 +1,13 @@
 import './App.css';
 import React, { useState } from 'react';
-//import { Route, Routes, redirect } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleuserChange = (e) => {
     setUsername(e.target.value);
@@ -14,33 +16,6 @@ export default function Register() {
     setPassword(e.target.value);
   }
 
-
-/*
-  const handleForm = async (e) => {
-    
-    console.log(username);
-    e.preventDefault();
-    
-    const userData = {
-      username: username,
-      password: password,
-    };
-
-    try {
-      const add = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-      console.log(add);
-    } catch(err) {
-      console.error();
-    }
-  };
-*/
-      //async
 const handleForm = (e) => {
     
     console.log(username);
@@ -50,8 +25,8 @@ const handleForm = (e) => {
       username: username,
       password: password,
     };
-    // await
-     fetch('http://localhost:8080/api/register', {
+     //fetch('http://localhost:8080/api/register', {
+      fetch('/api/register', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -69,8 +44,9 @@ const handleForm = (e) => {
 
       });
   };
-
-
+  const handleClick = () => {
+    navigate("/");
+  }
 
   return (
   <>
@@ -84,15 +60,11 @@ const handleForm = (e) => {
             <label>Password</label>
             <input className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
 
-
-            <input id='reg-btn' className='btns' type='submit' value='Register'></input>
-      
-      
+            <div className="form-btns-container">
+              <input id='reg-btn' className='btns' type='submit' value='Register'></input>
+              <button id="back-btn" className="btns" onClick={handleClick} type="button">Back</button>
+            </div>
         </form>
-
-
-
-      
     </div>
   </>
   );
