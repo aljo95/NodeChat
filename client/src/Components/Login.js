@@ -77,29 +77,21 @@ const handleForm = async (e) => {
     
   };
 
-  const handleClick = () => {
-    navigate("/");
-  }
-
   return (
     <div>
       <div className="register">
         <h2 id='register-welcome'><p>Sign in</p></h2>
-          <form className='register-form' onSubmit={handleForm}>
-            
-              <label>Username: </label>
-              <input className='inputs' type='text' name='username' value={username} onChange={handleuserChange}></input>
-          
-              <label>Password: </label>
-              <input className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
-            
-              <div className="form-btns-container">
-                <input id='reg-btn' className='btns' type='submit' value='Log in'></input>
-                <button id="back-btn" className="btns" onClick={handleClick} type="button">Back</button>
-              </div>
-          </form>
-          
+        <form className='register-form' onSubmit={handleForm}>
+          <label>Username: </label>
+          <input className='inputs' type='text' name='username' value={username} onChange={handleuserChange}></input>
+          <label>Password: </label>
+          <input id="bottom-input" className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
+          <div className="form-btns-container">
+            <button id='reg-btn' className='btns' type='submit'>Log In</button>
+            <button id="back-btn" className="btns" onClick={() => navigate("/")} type="button">Back</button>
+          </div>
+        </form>   
       </div>
-  </div>
+    </div>
   );
 }

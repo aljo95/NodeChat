@@ -53,15 +53,12 @@ const handleForm = (e) => {
     <div className="register">
       <h2 id='register-welcome'><p>Register Account</p></h2>
         <form className='register-form' onSubmit={handleForm}>
-
-            <label>Username</label>
+            <label>Username: </label>
             <input className='inputs' type='text' name='username' value={username} onChange={handleuserChange}></input>
-
-            <label>Password</label>
-            <input className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
-
+            <label>Password: </label>
+            <input id="bottom-input" className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
             <div className="form-btns-container">
-              <input id='reg-btn' className='btns' type='submit' value='Register'></input>
+              <button id='reg-btn' className='btns' type='submit'>Register</button>
               <button id="back-btn" className="btns" onClick={handleClick} type="button">Back</button>
             </div>
         </form>
