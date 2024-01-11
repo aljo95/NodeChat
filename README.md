@@ -8,6 +8,7 @@
 - [x] Socket connection <br>
 - [x] Chat by emission <br>
 - [x] Online users list <br>
+- [ ] Media queries<br>
 - [ ] Private rooms with password protection <br>
 - [ ] More profile customization
 
