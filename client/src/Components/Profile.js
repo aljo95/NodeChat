@@ -8,7 +8,7 @@ export default function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8080/api/checkAuth', {
+        fetch('/api/checkAuth', {    // CHANGE ROUTES NOW :)
           credentials: "include",
         })
         .then((response) => {
@@ -26,7 +26,7 @@ export default function Profile() {
     }, [])
 
     const logout = (e) => {
-        fetch('http://127.0.0.1:8080/api/logout', {
+        fetch('/api/logout', {
           credentials: "include",
         })
         .then((res) => {
@@ -50,16 +50,20 @@ export default function Profile() {
 
 
   return (
-    <div>
-      <p>Username: {username}</p>
-      <Link to='/chat'>
-        <button id="register" className='btns'>
-          <p>CHAT</p>
+    <div id="profile-container">
+      <h2 id='welcome'><p>Welcome {username}!</p></h2>
+      <div id="home-links">
+        <button id="profile-chat" onClick={() => navigate("/chat")}>
+          <p>Lobby</p>
         </button>
-      </Link>
-      <button id="login" className='btns' onClick={logout}>
-        <p>LOGOUT</p>
-      </button>
+        <button id="rooms-chat">
+          <div className="tooltiptext-profile">Coming soon!</div>
+          Rooms
+        </button>
+        <button id="profile-logout" onClick={logout}>
+          <p>Logout</p>
+        </button>
+      </div>
     </div>
   );
 }
