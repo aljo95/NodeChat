@@ -23,25 +23,3 @@ export default function Home() {
   );
 }
 
-/*
-  return (
-    <div className="home">
-      <h2 id='welcome'><p>NodeChat</p></h2>
-      <div id="home-links">
-        <Link to='/login' className="links">
-          <button id="login">
-            <p>LOGIN</p>
-          </button>
-        </Link>
-
-        <Link to='/register' className="links" id="second-link">
-          <button id="register">
-            <p>REGISTER</p>
-          </button>
-        </Link>
-      </div>
-      
-    </div>
-  );
-}
-*/
