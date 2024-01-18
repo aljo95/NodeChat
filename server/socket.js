@@ -54,4 +54,3 @@ const socketIOExport = (io) => {
 };
 
 module.exports = socketIOExport;
-
