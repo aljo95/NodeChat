@@ -39,13 +39,44 @@ const handleForm = (e) => {
 
         //this is for registering, we want to redirect on login
         if (data.message === "success") {
-          //
+          //navigate("/login");
+          /* Auto login function after successful registration */
+          autoLogin(userData.username, userData.password);
         }
 
       });
   };
   const handleClick = () => {
     navigate("/");
+  }
+
+  const autoLogin = (name, pw) => {
+
+    const userData = {
+      username: name,
+      password: pw,
+    };
+
+    fetch('/api/login', {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(res => {
+      console.log(res);
+      if (res.ok) {
+        alert("GOOD JOB XD");
+
+        navigate("/Profile");
+
+      } else {
+        alert("Something went wrong!");
+      }
+      
+    })
   }
 
   return (
