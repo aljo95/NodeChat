@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const passport = require('passport');
 const User = require('./models.js');
+const Messages = require('./messagesModel.js');
 const LocalStrategy = require('./passp.js');
 const controllers = require('./controllers.js');
 //const cookieParser = require('cookie-parser');  ////////////////
