@@ -3,6 +3,7 @@
 const express = require("express"); 
 const router = express.Router(); 
 const User = require("./models"); 
+const Messages = require("./messagesModel");
 const passport = require("passport"); 
 const bcrypt = require("bcrypt"); 
   
@@ -97,6 +98,66 @@ router.post(                            // NEED TO FIND USER FROM DATABASE NOT J
 ); 
 
 
+
+router.post('/storeMessage', async (req, res) => {
+
+    // req.body.message will hold either object or string. Just store like this in db
+    
+    // 1: req.body =  { message: { name: 'cunt', text: 'asdfasdf', time: 'Thu 15:06' } }
+    //  => req.body.message = { name: 'cunt', text: 'asdfasdf', time: 'Thu 15:06' }
+
+    // 2: req.body =  { message: 'asdfasdf' }   <-- object
+    //  => req.body.message = 'asdfasdf'        <-- string
+
+    
+    // BEFORE WE SAVE WE WANT TO ADD AN ID. IF NO RECORDS THEN ID=1, ELSE COUNT RECRODS!
+    /*
+    const user = await Messages.find(); 
+    console.log("JJJJJJJJJ")
+    console.log(user);
+    console.log("JJJJJJJJJ")
+*/
+
+console.log("JJJJJJJJJ")
+console.log(req.body);
+console.log("JJJJJJJJJ")
+
+    // Add a count variable to the body.message object to keep track of order
+    // First need to return the length of current collection:
+    const amountOfRecords = await Messages.countDocuments();
+    console.log("Amount of documents: " + amountOfRecords);
+
+    if (typeof req.body.message === "string") {
+        console.log("11111111111111111111111111111111111")
+        const newMsg = new Messages( { text: req.body.message } );
+        await newMsg.save(); 
+    }
+    else if (typeof req.body.message === "object") {
+        console.log("22222222222222222222222222222222222")
+        const newMsg = new Messages(req.body.message); 
+        await newMsg.save(); 
+    } 
+    
+    else {
+        console.log("Could not save history - incompatible data type with model");
+        return res.status(500).json({ message: "could not save to mongoDB" });
+    }
+
+    return res.status(200).json({ message: "success" });
+});
+
+
+router.get('/getHistory', async (req, res) => {
+    console.log("history gotteN^");
+
+
+    res.send({ asfterhistory: "history success"});
+});
+
+
+
+
+
 router.get('/checkAuth', (req, res) => {
 
     
@@ -119,7 +180,7 @@ router.get('/checkAuth', (req, res) => {
   
 router.get("/logout", (req, res) => { 
     req.session.destroy(); 
-    res.status(200).json({ message: "logout success" });        // Add conditional response?
+    res.status(200).json({ message: "logout success" }); 
 }); 
 
 module.exports = router;  
