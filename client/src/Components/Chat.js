@@ -5,6 +5,8 @@ import  socketIO  from 'socket.io-client';
 
 
 var socket = socketIO.connect('http://192.168.0.4:8080');
+var latestMsg = "";
+var msgHistoryArr = [];
 
 export default function Chat() {
 
@@ -14,26 +16,26 @@ export default function Chat() {
     const [messages, setMessages] = useState([]);
     const [messageText, setMessageText] = useState('');
 
-    const [sameUserAsLastMessage, setSameUserAsLastMessage] = useState(false);
-    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [showCollapsible, setShowCollapsible] = useState(false);
+
+    const [lastMessage, setLastMessage] = useState({});
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     const navigate = useNavigate();
     const ref = useRef();
-    const date = new Date();
-    const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
+    
     useEffect(() => {
 
         fetch('/api/checkAuth', {
           credentials: "include",
+          method: 'GET',
         })
         .then((response) => {
           return response.json().then((jsonResponse) => {
 
             if (!jsonResponse.username) {
-                //redirect back to home (root)
                 navigate("/");
-                //break needed?
             } else {
               setUsername(jsonResponse.username);
               
@@ -50,82 +52,166 @@ export default function Chat() {
               });
           */
             }
+            
             return ()=>{ 
+              // On component dismount
               socket.disconnect(); 
              }
+            
           })
         });
+
+       // fetchHistory();
+
     }, [])
+
+
+    const fetchHistory = () => {
+      
+      fetch('/api/getHistory', {
+        method: 'GET',            // credentials?
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        console.log("After history fetch");
+      });
+    }
+
 
     useEffect(() => {
       ref.current.scrollIntoView();
+      //move this ref into useEffect for [messages]
+
     })
 
 
     useEffect(() => {
-      
       socket.on('message', (message) => {
         //message has { message.name, message.time, message.text } as object
-
-        console.log("öööööööööööööö");
-
         if (messages.length === 0) {
-          console.log("FIRST ONLY?");
+          setLastMessage(message);
           setMessages([message]);
-          return;
-        }
-
-        for (let i=messages.length-1; i>=0; i--) {
-          console.log(i);
-          if (messages[i].name) {
-            if (messages[i].name !== message.name) {
-              setMessages([ ...messages, message]);
-              return;
-            } else if (messages[i].name === message.name) {
-              
-              //DONT EVEN NEED THESE SOCKETS, JUST TAKE message.time AND USE ON THE messages[i].time !!
-              /*
-              socket.emit('getTime');
-              socket.on('getTime', (time) => {
-                messages[i].time = time;
-                //forceUpdate();
-                //setMessages([ ...messages]);
-              })
-              */
-
-              messages[i].time = message.time;
-              setMessages([ ...messages, message.text]);
-              return;
+        } else {
+          for (let i=messages.length-1; i>=0; i--) {
+            if (messages[i].name) {
+              if (messages[i].name !== message.name) {
+                setLastMessage(message);
+                setMessages([ ...messages, message]);
+                break;
+              } else if (messages[i].name === message.name) {
+                messages[i].time = message.time;
+                setLastMessage(message.text);
+                setMessages([ ...messages, message.text]);
+                break;
+              }
             }
           }
         }
       })
-      return () => {
+      return () => {    
         socket.off('message');
       }
-    }, [messages])
+    }, [messages]);
 
 
     useEffect(() => {
+      if (Object.keys(lastMessage).length === 0) return;
+      msgHistoryArr.push(lastMessage);
+      console.log("MSG HIS: ");
+      console.log(msgHistoryArr);
+      console.log("_________");
+    }, [lastMessage])
+/*
+    useEffect(() => {
+      if (Object.keys(lastMessage).length === 0) return;
+      console.log(lastMessage);
       
-      socket.on('username', (userNames) => {
-        
-        setUsernames(userNames);
-       // forceUpdate();          //needed?
+      console.log("YUYUYUYUYUYUY");
+
+      // store into db, then fetch at 'useEffect, []' and push into msgArray then setMessages([...msgArray])
+      const msgObj = {
+        message: lastMessage,
+      }
+      fetch('/api/storeMessage', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(msgObj)
       })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+    }, [lastMessage]);
+*/
 
-    }, [usernames])
+    const sendHistoryToDb = async () => {
 
-    // dont need later
-    useEffect(() => {
-      console.log("amount of users: " + usernames.length);
-    }, [usernames])
+      console.log("Start of array: ");
+      console.log(msgHistoryArr[msgHistoryArr.length-1]);
+      console.log("end of array.");
 
+      let mostRecentMsg = msgHistoryArr[msgHistoryArr.length-1];
 
-    const sendMessage = () => {
-      socket.emit('sendMessage', { name: username, text: messageText });
-      setMessageText('');
+      const msgObj = {
+        message: msgHistoryArr[msgHistoryArr.length-1],
+      }
+      await fetch('/api/storeMessage', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(msgObj)
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Data: ");
+        console.log(data);
+        console.log("end of data.");
+      });
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+      socket.on('username', (userNames) => {
+        setUsernames(userNames);
+      })
+      return () => {
+        socket.off('username');
+      }                                                    // ADDED SOCKET OFF?
+    }, [usernames]);
+
+    const sendMessage = async () => {
+      if (messageText) {
+        await socket.emit('sendMessage', { name: username, text: messageText });
+        //forceUpdate();
+        setMessageText('');
+        setTimeout(() => {
+          sendHistoryToDb();
+        }, 100);
+        
+      }
+    };
 
     const logout = () => {
 
@@ -134,34 +220,52 @@ export default function Chat() {
       })
       .then((res) => {
         return res.json().then((jsonRes) => {
-          console.log(jsonRes);
           
           socket.emit('removeUser', username);
-          socket.on('updatedUsers', async (updatedUserArray) => {
-            await setUsernames(updatedUserArray);        
-          })
-          
 
           navigate("/");
+          return;
         })
       })
+    };
+
+    const navigateToProfile = () => {
+      socket.emit('removeUser', username);
+      return;
     }
 
   return (
     <div className='chat-room'>
 
-      <div className="nav-bar">
-        <Link to='/profile'>
-          <button id="profile" className='btns'>
-            <p>PROFILE</p>
-          </button>
-        </Link>
-        <button id="login" className='btns' onClick={logout}>
-          <p>LOGOUT</p>
-        </button>
-      </div>
-
       <div className="main-content">
+      {/* For mobiles */}
+        <div className="mobile-nav-bar">
+
+          <button id="mobile-collapsible" onClick={() => setShowCollapsible(!showCollapsible)}>Users</button>
+          {showCollapsible ? 
+            <div className="mobile-users-list">
+              <p id="mobile-users-online">USERS</p>
+              {usernames.map((nick, index) => (
+                <div key={index} className="mobile-each-user-container">
+    
+                  <div className="green-orb" id="m-green-orb"></div>
+                  <p className="mobile-username-list">{nick}</p>
+    
+                </div>
+              ))}
+            </div>
+          :
+            <></>
+          }
+          
+
+          <div id="mobile-nav-btns">
+            <button id="mobile-profile" onClick={() => navigate("/Profile")}>Profile</button>
+            <button id="mobile-logout" onClick={logout}>Logout</button>
+          </div>
+
+        </div>
+
         <div className="users-list">
           <p id="users-online">USERS</p>
           {usernames.map((nick, index) => (
@@ -203,23 +307,26 @@ export default function Chat() {
           </div>  
 
         </div>
-
         <div className="future-content">
-          <p>Future Features..?</p>
-          <ul className="future-list">
-            <li><p>Rooms with passwords</p></li>
-            <li><p>Choose name color</p></li>
-            <li><p>Profile Pictures</p></li>
-          </ul>
+          <div className="nav-bar">
+            <div className="first-nav-btns">
+              <Link to='/profile' id="profile-link">
+                <button id="profile" onClick={navigateToProfile}>
+                  Profile
+                </button>
+                
+              </Link>
+              <button id="rooms-btn">
+                <div className="tooltiptext">Coming soon!</div>
+                Rooms
+              </button>
+            </div>
+            <button id="logout" onClick={logout}>
+              Logout
+            </button>
+          </div>
         </div>
-
       </div>
-          {/* 
-      <div className="input-container">
-        <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></input>
-        <button onClick={sendMessage}>SEND MSG</button>
-      </div>  
-          */}
     </div>
   );
 }
