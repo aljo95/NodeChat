@@ -13,7 +13,7 @@ export default function Profile() {
         })
         .then((response) => {
           return response.json().then((jsonResponse) => {
-            console.log(jsonResponse);
+            //console.log(jsonResponse);
             setUsername(jsonResponse.username)
 
             if (!jsonResponse.username) {
