@@ -9,7 +9,7 @@
 - [x] Chat by emission <br>
 - [x] Online users list <br>
 - [x] Media queries<br>
-- [ ] Store message history in db and fetch on component load<br>
+- [x] Store message history in db and fetch on component load<br>
 - [ ] Private rooms with password protection <br>
 - [ ] More profile customization
 
