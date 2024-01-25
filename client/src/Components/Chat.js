@@ -61,7 +61,7 @@ export default function Chat() {
           })
         });
 
-       // fetchHistory();
+        fetchHistory();
 
     }, [])
 
@@ -77,7 +77,23 @@ export default function Chat() {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        /*
+        console.log("Start of data from get history");
+        console.log(data);
         console.log("After history fetch");
+
+        /*
+        for (let i=0; i<data.length; i++) {
+          if (data[i].name) {
+            data = data.slice(i);
+            setMessages([ ...data ]);
+            return;
+          }
+        }
+        */
+       
+        setMessages([ ...data ]);
+        
       });
     }
 
