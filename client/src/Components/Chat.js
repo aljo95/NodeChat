@@ -4,8 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import  socketIO  from 'socket.io-client';
 
 
-var socket = socketIO.connect('http://192.168.0.4:8080');
-var latestMsg = "";
+var socket = socketIO.connect('http://127.0.0.1:8080');
 var msgHistoryArr = [];
 
 export default function Chat() {
@@ -33,43 +32,34 @@ export default function Chat() {
         })
         .then((response) => {
           return response.json().then((jsonResponse) => {
-
             if (!jsonResponse.username) {
                 navigate("/");
             } else {
               setUsername(jsonResponse.username);
-              
-
               socket.on('connect', () => {
                 console.log('Connected to server');
               });
-
               socket.emit('sendUsername', (jsonResponse.username));
-
           /*
               socket.on('disconnect', () => {
                 console.log('Disconnected from server');
               });
           */
             }
-            
             return ()=>{ 
               // On component dismount
               socket.disconnect(); 
              }
-            
           })
         });
-
         fetchHistory();
-
     }, [])
 
 
     const fetchHistory = () => {
       
       fetch('/api/getHistory', {
-        method: 'GET',            // credentials?
+        method: 'GET',
         headers: {
           "Content-Type": "application/json"
         },
@@ -77,31 +67,14 @@ export default function Chat() {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        /*
-        console.log("Start of data from get history");
-        console.log(data);
-        console.log("After history fetch");
-
-        /*
-        for (let i=0; i<data.length; i++) {
-          if (data[i].name) {
-            data = data.slice(i);
-            setMessages([ ...data ]);
-            return;
-          }
-        }
-        */
-       
         setMessages([ ...data ]);
-        
       });
     }
 
 
     useEffect(() => {
       ref.current.scrollIntoView();
-      //move this ref into useEffect for [messages]
-
+      //move this ref into useEffect for [messages]?
     })
 
 
@@ -137,42 +110,10 @@ export default function Chat() {
     useEffect(() => {
       if (Object.keys(lastMessage).length === 0) return;
       msgHistoryArr.push(lastMessage);
-      console.log("MSG HIS: ");
-      console.log(msgHistoryArr);
-      console.log("_________");
     }, [lastMessage])
-/*
-    useEffect(() => {
-      if (Object.keys(lastMessage).length === 0) return;
-      console.log(lastMessage);
-      
-      console.log("YUYUYUYUYUYUY");
 
-      // store into db, then fetch at 'useEffect, []' and push into msgArray then setMessages([...msgArray])
-      const msgObj = {
-        message: lastMessage,
-      }
-      fetch('/api/storeMessage', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(msgObj)
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      });
-    }, [lastMessage]);
-*/
 
     const sendHistoryToDb = async () => {
-
-      console.log("Start of array: ");
-      console.log(msgHistoryArr[msgHistoryArr.length-1]);
-      console.log("end of array.");
-
-      let mostRecentMsg = msgHistoryArr[msgHistoryArr.length-1];
 
       const msgObj = {
         message: msgHistoryArr[msgHistoryArr.length-1],
@@ -186,26 +127,9 @@ export default function Chat() {
       })
       .then(res => res.json())
       .then(data => {
-        console.log("Data: ");
         console.log(data);
-        console.log("end of data.");
       });
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     useEffect(() => {
@@ -214,41 +138,40 @@ export default function Chat() {
       })
       return () => {
         socket.off('username');
-      }                                                    // ADDED SOCKET OFF?
+      }
     }, [usernames]);
+
 
     const sendMessage = async () => {
       if (messageText) {
         await socket.emit('sendMessage', { name: username, text: messageText });
-        //forceUpdate();
         setMessageText('');
         setTimeout(() => {
           sendHistoryToDb();
         }, 100);
-        
       }
     };
 
-    const logout = () => {
 
+    const logout = () => {
       fetch('/api/logout', {
         credentials: "include",
       })
       .then((res) => {
         return res.json().then((jsonRes) => {
-          
           socket.emit('removeUser', username);
-
           navigate("/");
           return;
         })
       })
     };
 
+
     const navigateToProfile = () => {
       socket.emit('removeUser', username);
       return;
     }
+
 
   return (
     <div className='chat-room'>
@@ -256,32 +179,25 @@ export default function Chat() {
       <div className="main-content">
       {/* For mobiles */}
         <div className="mobile-nav-bar">
-
           <button id="mobile-collapsible" onClick={() => setShowCollapsible(!showCollapsible)}>Users</button>
           {showCollapsible ? 
             <div className="mobile-users-list">
               <p id="mobile-users-online">USERS</p>
               {usernames.map((nick, index) => (
                 <div key={index} className="mobile-each-user-container">
-    
                   <div className="green-orb" id="m-green-orb"></div>
                   <p className="mobile-username-list">{nick}</p>
-    
                 </div>
               ))}
             </div>
           :
             <></>
           }
-          
-
           <div id="mobile-nav-btns">
             <button id="mobile-profile" onClick={() => navigate("/Profile")}>Profile</button>
             <button id="mobile-logout" onClick={logout}>Logout</button>
           </div>
-
         </div>
-
         <div className="users-list">
           <p id="users-online">USERS</p>
           {usernames.map((nick, index) => (
@@ -289,14 +205,10 @@ export default function Chat() {
 
               <div className="green-orb"></div>
               <p className="username-list">{nick}</p>
-
             </div>
           ))}
         </div>
-
-
         <div className="messages-and-input">
-
           <div className="messages">
             {messages.map((message, index) => ( //need conditionals here: if (message.text) else... etc.
             <div className="nameAndMessage-container" key={index}> 
@@ -315,13 +227,10 @@ export default function Chat() {
             ))}
             <div ref={ref}></div>
           </div>
-
-
           <div className="input-container">
             <textarea id ="input-text" type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Type message here..."></textarea>
             <button id="input-btn" onClick={sendMessage}>send</button>
           </div>  
-
         </div>
         <div className="future-content">
           <div className="nav-bar">
@@ -330,7 +239,6 @@ export default function Chat() {
                 <button id="profile" onClick={navigateToProfile}>
                   Profile
                 </button>
-                
               </Link>
               <button id="rooms-btn">
                 <div className="tooltiptext">Coming soon!</div>
