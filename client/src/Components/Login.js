@@ -28,10 +28,6 @@ useEffect(() => {
   })
   .then((response) => {
     return response.json().then((jsonResponse) => {
-      console.log("IN FRONTEND :)")
-      console.log(jsonResponse);
-      console.log(jsonResponse.username);
-      console.log("End of fetch :)")
       if (jsonResponse.username) {
         setIsLoggedIn(true);
         navigate("/Profile");
@@ -42,7 +38,6 @@ useEffect(() => {
 
 const handleForm = async (e) => {
     
-    console.log(username);
     e.preventDefault();
     
     const userData = {
@@ -59,7 +54,7 @@ const handleForm = async (e) => {
         body: JSON.stringify(userData)
       })
       .then(res => {
-        console.log(res);
+        
         if (res.ok) {
           setIsLoggedIn(true);
 
