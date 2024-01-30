@@ -1,36 +1,17 @@
 #root {
-  /*
-  max-height: 800px;
-  min-height: 800px;
-  margin: auto;
-*/
   width: 100%;
   height: 100%;
-
 }
-
 .home, .register {
-  
   display: flex;
   flex-direction: column;
   align-items: center;
-  
   width: 320px;
   height: 410px;  /* set pixels? */
-  
-  
-  
   background-color: #1b1c20;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(20, 19, 19, 0.377);;
-
-  
 }
-.home {
-
-}
-
-
 #home-links {
   width: 100%;
   height: 75%;
@@ -39,11 +20,9 @@
   align-items: center;
   flex-direction: column;
 }
-
 #login, #register {
   width: 60%;
   height: 28%;
-
   background-color: rgba(0, 0, 0, 0.719);
   color: white;
   border: none;
@@ -51,7 +30,6 @@
   font-size: 16px;
   cursor: pointer;
 }
-
 #register:hover, #login:hover, #profile-chat:hover, #profile-logout:hover {
   background-color: #595a5f6e;
 }
@@ -113,12 +91,8 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
   width: 320px;
   height: 410px;  /* set pixels? */
-  
-  
-  
   background-color: #1b1c20;
   border-radius: 15px;
   box-shadow: 0 0 15px rgb(80, 79, 79);
@@ -126,7 +100,6 @@ p {
 #profile-chat, #profile-logout, #rooms-chat {
   width: 60%;
   height: 28%;
-
   background-color: rgba(0, 0, 0, 0.719);
   color: white;
   border: none;
@@ -160,45 +133,29 @@ p {
   justify-content: center;
   white-space: nowrap;
 }
-
 #rooms-chat:hover .tooltiptext-profile {
-
   visibility: visible;
 }
 #rooms-chat:hover {
   visibility: hidden;
 }
+
 /********************************/
-
-
 
 .border {
   border-style: inset;
   border-width: 1px;
   margin: 10px;
 }
-
-.center {
-  /*
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  */
-}
-
-
 .login {
   border: solid 2px #777;
   width: 50%;
   background-color: aliceblue;
 }
-
 a.text {
   text-decoration: none;
   font-weight: 700;
 }
-
-
 #messages { 
   list-style-type: none;
   text-align: left;
@@ -208,21 +165,13 @@ a.text {
   overflow: scroll;
   overflow-x: hidden;
 }
-
 #messages li { 
   padding: 5px 10px;
 }
-
 #messages li:nth-child(odd) { 
   background: #eee;
 }
-
-
-
-
-
 .register-form {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -231,7 +180,6 @@ a.text {
   width: 75%;
   margin-top: -5%;
 }
-
 label {
   color: white;
   margin-bottom: 15px;
@@ -249,51 +197,21 @@ label {
   outline: none;
   font-size: 18px;
 }
-
 .inputs:focus {
   outline-style: none;
   background-color: rgb(36, 35, 35);
 }
 
-
-
-
-
-
-
-
-
 /* CHAT ROOM */
-
 .chat-room {
   width: 100%;
-
   margin: auto;
-  
   height: 100%;
-  /*
-  margin: auto; 
-  /* This margin: auto solves the container moving up when resizing height */
-/*
-  min-height: 960px;
-
-  min-width: 1600px;
-*/
-
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-/*
-  border: dashed;
-  border-color: red;*/
 }
-
-
-
-
-
-
 .main-content {
   border: solid;
   border-color: #1b1c20;
@@ -306,20 +224,17 @@ label {
   justify-content: space-evenly;
   box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.7);
 }
-
 /*  Inside Main-content container */
 .users-list {
   width: 20%;
   background-color: #1b1c20;
 }
-
 .messages-and-input {
   display: flex;
   flex-direction: column;
   width: 60.3%;
   height: 100%;
 }
-
 .messages {
   width: 100%;
   overflow-y: auto;
@@ -328,32 +243,23 @@ label {
   flex-direction: column;
   height: 90%;
   background-color: rgb(20, 19, 19);
-
-  /*box-shadow: inset 1px 1px 0px 1px rgba(0,0,0,0.7);*/
-  
   -moz-box-shadow: 
   inset 0px 20px 8px -19px rgba(0,0,0,0.7),
   inset 0px -20px 8px -19px rgba(0,0,0,0.7);  
   -webkit-box-shadow: 
   inset 0px 20px 8px -19px rgba(0,0,0,0.7),
-  inset 0px -20px 8px -19px rgba(0,0,0,0.7);  
-
+  inset 0px -20px 8px -19px rgba(0,0,0,0.7);
   box-shadow: 
   inset 0px 20px 8px -19px rgba(0,0,0,0.7),
   inset 0px -20px 8px -19px rgba(0,0,0,0.7);
-  
   align-items: center;
-
 }
 .nameAndMessage-container {
   overflow-wrap: break-word;
-  
   width: 95%;
-  
   margin-top: 0%;
   margin-bottom: -1.5%;
 }
-
 .name-and-time {
   display: flex;
   align-items: center;
@@ -361,14 +267,10 @@ label {
   margin-top: 2%;
   margin-bottom: 1%;
 }
-.message-username {
-
-}
 .message-time {
   font-size: 11px;
   height: 40%;
 }
-
 .message-text {
   position: relative;
   padding-left: 1%;
@@ -377,14 +279,6 @@ label {
   
   margin: 0;
 }
-
-/*
-.last-space {
-  border: dashed;
-}
-*/
-/* End of main-content */
-
 .input-container {
   height: 10%;
   position: relative;
@@ -393,15 +287,11 @@ label {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  /*background-color: #22252b;*/
   background-color: #1b1c20;
-  
   border-top: solid;
   border-color: #1b1c20;
   border-width: 8px;
-  
 }
-
 #input-text {
   height: 92%;
   width: 85%;
@@ -414,10 +304,7 @@ label {
   -moz-box-shadow: none;
   box-shadow: none;
   color: white;
-
-  
 }
-
 #input-btn {
   height: 100%;
   width: 15%;
@@ -433,21 +320,15 @@ label {
 #input-btn:hover {
   background-color: rgba(20, 19, 19, 0.705);
 }
-
 .future-content {
-  width: 20%; /* why? */
+  width: 20%;
   height: 100%;
   margin-left: 0;
   background-color: #1b1c20;
-
-  
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
-
 .future-list {
   color: white;
   margin-top: -10%;
@@ -455,19 +336,6 @@ label {
 }
 
 /* End of chat room */
-
-
-
-
-
-
-
-
-
-
-
-
-
 #users-online {
   display: flex;
   justify-content: center;
@@ -478,14 +346,12 @@ label {
   align-items: center;
   height: 5%;
 }
-
 .username-list {
   font-size: 16px;
   margin-left: 5%;
   width: 80%;
   overflow-wrap: break-word;
 }
-
 .green-orb {
   border: solid;
   border-color: green;
@@ -496,54 +362,26 @@ label {
   background-color: green;
   border-radius: 50%;
 }
-
-
-
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px gray inset !important;
 }
-
-
     /* FOR CHROME */
-    
 ::-webkit-scrollbar {
       height: 12px;
       width: 12px;
       background: #000;
 }
-  
 ::-webkit-scrollbar-thumb {
       background: rgba(119, 119, 119, 0.596);
       -webkit-border-radius: 1ex;
       -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
 }
-  
 ::-webkit-scrollbar-corner {
       background: #000;
 }
-
-
-
-/*
-@media screen and (max-height: 560px) { 
-  .chat-room {
-    width: 100%;
-  
-    margin: auto;
-    
-    height: 100%;
-  }
-
-
-}*/
-
-
-
-/* Buttons on chat page */
 .nav-bar {
   height: 100%;
   width: 100%;
@@ -616,31 +454,9 @@ input:-webkit-autofill:active{
 #rooms-btn:hover .tooltiptext {
   visibility: visible;
 }
-/*
-#input-btn {
-  height: 100%;
-  width: 15%;
-  background-color: rgb(20, 19, 19);
-  margin-left: 1.5%;
-  color: white;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-}
-#input-btn:hover {
-  background-color: rgba(20, 19, 19, 0.705);
-}
-#input-btn:active {
-  transform: translateY(1px);
-  transform: translateX(1px);
-}
-*/
 .mobile-nav-bar {
   display: none;
 }
-
 /*@media screen and (max-width: 1050px), screen and (max-height: 700px) {*/
 @media screen and (max-width: 830px), screen and (max-height: 560px) {
   .home {
@@ -668,17 +484,14 @@ input:-webkit-autofill:active{
   #register {
     margin-top: -10%;
   }
-  
   p {
     font-size: 12px;
   }
-  
   .btns {
     width: 100px;
     align-items: center;
     text-align: center;
   }
-
   .register-form {
     padding: 0;
     margin: 0;
@@ -717,37 +530,28 @@ input:-webkit-autofill:active{
     text-align: center;
     vertical-align: middle;
   }
-
 /* MEDIA QUERIES FOR CHAT.JS ROOM! */
-
-.main-content {
-  border: solid;
-  border-color: #1b1c20;
-  border-width: 8px;
-  /*
-  width: 80%;
-  height: 80%;
-  */
-  width: 80vw;
-  height: 80vh;
-  /* do min or use % for sizing on mobiles???? */
-  min-height:360px;
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 15px;
-  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.7);
-  z-index: 2;
-}
-
+  .main-content {
+    border: solid;
+    border-color: #1b1c20;
+    border-width: 8px;
+    width: 80vw;
+    height: 80vh;
+    /* do min or use % for sizing on mobiles? */
+    min-height:360px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.7);
+    z-index: 2;
+  }
   .users-list {
     visibility: hidden;
     height: 0;
     width: 0;
   }
-
   .mobile-nav-bar {
     visibility: visible;
     width: 100%;
@@ -760,80 +564,75 @@ input:-webkit-autofill:active{
     border-color: #1b1c20;
     border-width: 8px;
   }
-#mobile-nav-btns {
-
-  height: 100%;
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  
-}
-#mobile-profile, #mobile-logout, #mobile-collapsible {
-  height: 100%;
-  width: 45%;
-  background-color: rgb(20, 19, 19);
-  color: white;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 5px;
-}
-#mobile-collapsible {
-  width: 30%;
-}
-.mobile-users-list {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
-  margin: auto;
-
-  width: 25%;
-  height: 50%;
-  min-height: 220px;
-  border: solid;
-  border-width: 1px;
-  border-radius: 15px;
-  border-color:rgb(80, 79, 79);
-  
-  background-color: #1b1c20;
-  display: flex;
-  flex-direction: column;
-  flex-wrap:wrap;
-}
-.mobile-users-list > p {
-  font-size: 16px;
-  border-bottom: solid;
-  border-width: 1px;
-  border-color:rgb(80, 79, 79);
-  width: 100%;
-  height: 5%;
-  padding-bottom: 10%;
-  text-align: center;
-  vertical-align: middle;
-}
-.mobile-each-user-container {
-  width: 90%;
-  height: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-}
-.mobile-username-list {
-  font-size: 16px;
-  padding-bottom: 2px;
-  overflow-wrap: break-word;
-  width: 80%;
-}
-#m-green-orb {
-  margin-right: 4%;
-}
+  #mobile-nav-btns {
+    height: 100%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #mobile-profile, #mobile-logout, #mobile-collapsible {
+    height: 100%;
+    width: 45%;
+    background-color: rgb(20, 19, 19);
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  #mobile-collapsible {
+    width: 30%;
+  }
+  .mobile-users-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    margin: auto;
+    width: 25%;
+    height: 50%;
+    min-height: 220px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    border-color:rgb(80, 79, 79);
+    background-color: #1b1c20;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+  }
+  .mobile-users-list > p {
+    font-size: 16px;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color:rgb(80, 79, 79);
+    width: 100%;
+    height: 5%;
+    padding-bottom: 10%;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .mobile-each-user-container {
+    width: 90%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-username-list {
+    font-size: 16px;
+    padding-bottom: 2px;
+    overflow-wrap: break-word;
+    width: 80%;
+  }
+  #m-green-orb {
+    margin-right: 4%;
+  }
   .messages-and-input {
     display: flex;
     flex-direction: column;
@@ -845,7 +644,6 @@ input:-webkit-autofill:active{
     height: 0;
     width: 0;
   }
-
   .messages {
     width: 100%;
     overflow-y: auto;
@@ -854,19 +652,15 @@ input:-webkit-autofill:active{
     flex-direction: column;
     height: 90%;
     background-color: rgb(20, 19, 19);
-    /*box-shadow: inset 1px 1px 0px 1px rgba(0,0,0,0.7);*/
-    
     -moz-box-shadow: 
     inset 0px 20px 8px -19px rgba(0,0,0,0.7),
     inset 0px -20px 8px -19px rgba(0,0,0,0.7);  
     -webkit-box-shadow: 
     inset 0px 20px 8px -19px rgba(0,0,0,0.7),
     inset 0px -20px 8px -19px rgba(0,0,0,0.7);  
-
     box-shadow: 
     inset 0px 20px 8px -19px rgba(0,0,0,0.7),
     inset 0px -20px 8px -19px rgba(0,0,0,0.7);  
-
   }
   .nameAndMessage-container {
     overflow-wrap: break-word;
@@ -876,7 +670,6 @@ input:-webkit-autofill:active{
     width: 90%;
     margin-bottom: -2.5%;
   }
-
   .name-and-time {
     display: flex;
     align-items: center;
@@ -885,25 +678,20 @@ input:-webkit-autofill:active{
     margin-left: -5px;
     margin-bottom: -1%;
   }
-
   .message-username {
     font-size: 20px;
     padding-bottom: 0.5%;
   }
-
   .message-time {
     font-size: 12px;
     padding-top: 0.5%;
   }
-
-
   .message-text {
     position: relative;
     padding: 0;
     margin-top: 0px;
     margin-bottom: 4%;
     font-size: 16px;
-    
   }
   .input-container {
     height: 10%;
@@ -913,16 +701,12 @@ input:-webkit-autofill:active{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    /*background-color: #22252b;*/
     background-color: #1b1c20;
-    
     border-top: solid;
     border-color: #1b1c20;
     border-width: 8px;
     border-radius: 0 0 7px 7px;
-    
   }
-
   #input-text {
     height: 92%;
     width: 85%;
@@ -937,7 +721,6 @@ input:-webkit-autofill:active{
     color: white;
     border-radius: 0 0 0 5px;
   }
-
   #input-btn {
     height: 100%;
     width: 15%;
@@ -951,24 +734,19 @@ input:-webkit-autofill:active{
     cursor: pointer;
     border-radius: 0 0 5px 0;
   }
-  
-
   #users-online {
     display: flex;
     justify-content: center;
   }
-
   .each-user-container {
     display: flex;
     align-items: center;
     height: 5%;
   }
-
   .username-list {
     font-size: 18px;
     margin-left: 5%;
   }
-
   .green-orb {
     border: solid;
     border-color: green;
@@ -979,80 +757,57 @@ input:-webkit-autofill:active{
     background-color: green;
     border-radius: 50%;
   }
-
-
-
-/* Profile page */
-#profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  width: 200px;
-  height: 200px;
-  
-  
-  
-  background-color: rgb(22, 21, 21);
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgb(80, 79, 79);
+  /* Profile page */
+  #profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: rgb(22, 21, 21);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgb(80, 79, 79);
+  }
+  #profile-chat, #profile-logout, #rooms-chat {
+    width: 60%;
+    height: 28%;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+  #rooms-chat {
+    background-color: rgba(0, 0, 0, 0.349);
+    border: none;
+    color: rgba(255, 255, 255, 0.486);
+    opacity: 0.8;
+    cursor: not-allowed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tooltiptext-profile {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    height: 56px;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.349);
+    border-radius: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  #rooms-chat:hover .tooltiptext-profile {
+    visibility: visible;
+  }
+  #rooms-chat:hover {
+    visibility: hidden;
+  }
 }
-#profile-chat, #profile-logout, #rooms-chat {
-  width: 60%;
-  height: 28%;
-
-  background-color: rgb(0, 0, 0);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-}
-#rooms-chat {
-  background-color: rgba(0, 0, 0, 0.349);
-  border: none;
-  color: rgba(255, 255, 255, 0.486);
-  opacity: 0.8;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tooltiptext-profile {
-  visibility: hidden;
-  position: absolute;
-  z-index: 1;
-  height: 56px;
-  width: 120px;
-  background-color: rgba(0, 0, 0, 0.349);
-  border-radius: 10px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-}
-
-#rooms-chat:hover .tooltiptext-profile {
-
-  visibility: visible;
-}
-#rooms-chat:hover {
-  visibility: hidden;
-}
-/********************************/
-
-
-
-
-
-
-
-
-
-}
-
-
-
