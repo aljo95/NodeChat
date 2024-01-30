@@ -13,7 +13,6 @@ export default function Home() {
           <button id="login" onClick={() => navigate("/login")}>
             <p>LOGIN</p>
           </button>
-
           <button id="register" onClick={() => navigate("/register")}>
             <p>REGISTER</p>
           </button>
@@ -22,4 +21,3 @@ export default function Home() {
     </div>
   );
 }
-
