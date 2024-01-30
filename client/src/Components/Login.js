@@ -9,7 +9,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   
-
   const handleuserChange = (e) => {
     setUsername(e.target.value);
   }
@@ -20,7 +19,6 @@ export default function Login() {
   const navigate = useNavigate();
 
 useEffect(() => {
-  //fetch('http://127.0.0.1:8080/api/checkAuth', {
   fetch('/api/checkAuth', {
     method: 'GET',
     credentials: "include",
@@ -52,7 +50,6 @@ const handleForm = async (e) => {
       password: password,
     };
 
-    //fetch('http://127.0.0.1:8080/api/login', {
     fetch('/api/login', {
         method: 'POST',
         credentials: "include",
@@ -64,17 +61,15 @@ const handleForm = async (e) => {
       .then(res => {
         console.log(res);
         if (res.ok) {
-          alert("GOOD JOB XD");
           setIsLoggedIn(true);
 
           navigate("/Profile");
 
         } else {
-          alert("WRONG INFO!");
+          alert("Wrong login information!");
         }
         
       })
-    
   };
 
   return (
