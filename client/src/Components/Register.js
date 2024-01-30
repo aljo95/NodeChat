@@ -16,9 +16,7 @@ export default function Register() {
     setPassword(e.target.value);
   }
 
-const handleForm = (e) => {
-    
-    console.log(username);
+  const handleForm = (e) => {
     e.preventDefault();
     
     const userData = {
@@ -35,17 +33,15 @@ const handleForm = (e) => {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-
         //this is for registering, we want to redirect on login
         if (data.message === "success") {
-          //navigate("/login");
+          //navigate("/login"); autoLogin function instead of navigate("/login")
           /* Auto login function after successful registration */
           autoLogin(userData.username, userData.password);
         }
-
       });
   };
+
   const handleClick = () => {
     navigate("/");
   }
@@ -66,16 +62,11 @@ const handleForm = (e) => {
       body: JSON.stringify(userData)
     })
     .then(res => {
-      console.log(res);
       if (res.ok) {
-        alert("GOOD JOB XD");
-
         navigate("/Profile");
-
       } else {
         alert("Something went wrong!");
       }
-      
     })
   }
 
@@ -83,16 +74,16 @@ const handleForm = (e) => {
   <>
     <div className="register">
       <h2 id='register-welcome'><p>Register Account</p></h2>
-        <form className='register-form' onSubmit={handleForm}>
-            <label>Username: </label>
-            <input className='inputs' type='text' name='username' value={username} onChange={handleuserChange}></input>
-            <label>Password: </label>
-            <input id="bottom-input" className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
-            <div className="form-btns-container">
-              <button id='reg-btn' className='btns' type='submit'>Register</button>
-              <button id="back-btn" className="btns" onClick={handleClick} type="button">Back</button>
-            </div>
-        </form>
+      <form className='register-form' onSubmit={handleForm}>
+        <label>Username: </label>
+        <input className='inputs' type='text' name='username' value={username} onChange={handleuserChange}></input>
+        <label>Password: </label>
+        <input id="bottom-input" className='inputs' type='password' name='password' value={password} onChange={handlepwChange}></input>
+        <div className="form-btns-container">
+          <button id='reg-btn' className='btns' type='submit'>Register</button>
+          <button id="back-btn" className="btns" onClick={handleClick} type="button">Back</button>
+        </div>
+      </form>
     </div>
   </>
   );
