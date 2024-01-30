@@ -1,6 +1,6 @@
 import './App.css';
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
 
@@ -8,46 +8,30 @@ export default function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('/api/checkAuth', {    // CHANGE ROUTES NOW :)
-          credentials: "include",
+      fetch('/api/checkAuth', {
+        credentials: "include",
+      })
+      .then((response) => {
+        return response.json().then((jsonResponse) => {
+          setUsername(jsonResponse.username)
+          if (!jsonResponse.username) {
+              navigate("/");
+          }
         })
-        .then((response) => {
-          return response.json().then((jsonResponse) => {
-            //console.log(jsonResponse);
-            setUsername(jsonResponse.username)
-
-            if (!jsonResponse.username) {
-                //redirect back to home (root)
-                navigate("/");
-            }
-
-          })
-        })
+      })
     }, [])
 
     const logout = (e) => {
-        fetch('/api/logout', {
-          credentials: "include",
+      fetch('/api/logout', {
+        credentials: "include",
+      })
+      .then((res) => {
+        return res.json().then((jsonRes) => {
+          //console.log(jsonRes);
+          navigate("/");
         })
-        .then((res) => {
-          return res.json().then((jsonRes) => {
-            console.log(jsonRes);
-            navigate("/");
-          })
-        })
-
-
-
-
-        /*
-        .then((response => {                    // LOGS OUT IN SERVER BUT FAILS TO RESPOND HERE AND REDIRECT. FIX!
-            console.log("Logout response: ");
-            console.log(response);
-            navigate("/");
-        }))
-        */
+      })
     }
-
 
   return (
     <div id="profile-container">
