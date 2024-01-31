@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 // Creating Message Model 
 const messageSchema = new mongoose.Schema({ 
 
-    //models must be string, string(required), date
     msgNr: { type: Number, required: true},
     name: { type: String },
     text: { type: String, required: true }, 
