@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({  path: './.env' });
 
 
 const connectDB = async() => {
-    mongoose.connect("mongodb://127.0.0.1:27017/LoginAuth")
+ //Add db connect string in .env file with variable name MONGODB_CONNECT
+    mongoose.connect("process.env.MONGODB_CONNECT")
     .then(() => {
         console.log("Connected to DB")
     })
