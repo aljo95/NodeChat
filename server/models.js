@@ -1,5 +1,5 @@
 
-// models.js 
+// Model for usernames and passwords
 const mongoose = require("mongoose"); 
   
 // Creating User Model 
