@@ -1,6 +1,14 @@
 ## Full stack chat web application
 
-Built with MERN stack. To install app run command `npm i` in root directory, client directory and server directory.
+### Live deployment at [nodechat.live](https://nodechat.live/)
+- Deployed in an AWS EC2 instance. 
+- Running in a Docker container.
+- Nginx reverse proxy for SSL. 
+<br>
+
+#
+### Local install
+Built with the MERN stack. To install app run command `npm i` in root directory, client directory and server directory.
 
 **Add in `.env` file in server directory:**<br>
 Mongodb connection string in `.env` with variable name `MONGODB_CONNECT="your-string"`<br>
@@ -25,4 +33,5 @@ Change all `127.0.0.1` to your local ip address `(192.168.0.XX)` if you want to 
 - [x] Store message history in db and fetch on component load<br>
 - [ ] Private rooms with password protection <br>
 - [ ] More profile customization
+<br>
 
