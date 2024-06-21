@@ -4,8 +4,6 @@
 - Deployed in an AWS EC2 instance. 
 - Running in a Docker container.
 - Nginx reverse proxy for SSL. 
-<br>
-
 #
 ### Local install
 Built with the MERN stack. To install app run command `npm i` in root directory, client directory and server directory.
